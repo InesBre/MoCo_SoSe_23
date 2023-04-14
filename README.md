@@ -1,9 +1,8 @@
 # MoCo_SoSe_23
 
-Im Rahmen des Moduls Mobile Computing im Sommer Semester 2023 an der TH Köln wird die App "..." entworfen.
+Im Rahmen des Moduls Mobile Computing im Sommer Semester 2023 an der TH Köln wird die App "Barcode-Bites" entworfen.
 
-Eingabe von parametern der ernährung, scannen barcode lebensmittel, abgleichen datenbank mit vorher eingegebenen parametern, evtl alternativen geben,...
+Barcode-Bites ist eine mobile Anwendung, um Nutzern zu helfen, fundierte Entscheidungen über ihre Lebensmittelauswahl zu treffen. Die App scannt den Barcode eines Lebensmittels und analysiert dann dessen Inhaltsstoffe und gegebenenfalls Nährwerte, um festzustellen, ob es mit den Ernährungsbedürfnissen und Präferenzen des Nutzers kompatibel ist.
+Die intuitive Benutzeroberfläche ermöglicht es den Nutzern ihre indivuduellen Ernährungsanforderungen bezüglich Allergien, Religion, Ernährungsform oder anderen Präferenzen einfach einzurichten. Sobald ein Lebensmittel gescannt wird, vergleicht die App die Inhaltsstoffe und Nährwerte mit den Ernährungsbedürfnissen des Nutzers und gibt eine Rückmeldung zu der Kompabilität, sowie eventuell mögliche Alternative-Produkte.
 
-Ziel: Einfaches sicheres einkaufen, gesundes ernähren,...
-
-(überlegen wieviele funktionen)
+Weitere Funktionen wie Rezeptvorschläge anhand eingegebener Präferenzen und automatischer Einkaufsliste sind vorstellbar.
