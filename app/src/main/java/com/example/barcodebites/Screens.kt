@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -207,7 +208,9 @@ fun MainHistoryScreen(navController: NavController){
         Column(modifier = Modifier.height(60.dp),
             horizontalAlignment = Alignment.End){
             Text(text = "Liked Items")
-            Icon(imageVector = Icons.Default.ArrowForward, contentDescription = "toLikedItems")
+            Icon(imageVector = Icons.Default.ArrowForward,
+                contentDescription = "toLikedItems",
+                modifier = Modifier.clickable { navController.navigate(Screen.LikeHistoryScreen.route) })
         }
         val historyItemRepository = HistoryItemRepository()
         val getAllData = historyItemRepository.getAllData()
@@ -226,7 +229,33 @@ fun MainHistoryScreen(navController: NavController){
 }
 
 @Composable
-fun LikeHistoryScreen(navController: NavController){}//scollabale
+fun LikeHistoryScreen(navController: NavController) {//scollabale
+    Column(
+        modifier = Modifier.height(60.dp),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Icon(imageVector = Icons.Default.ArrowBack,
+            contentDescription = "toHistoryItems",
+            modifier = Modifier.clickable { navController.navigate(Screen.MainHistoryScreen.route)
+                                            {popUpTo(Screen.MainHistoryScreen.route){inclusive = true}}})
+        Text(text = "back")
+    }
+    val likedHistoryItemRepository = LikedHistoryItemRepository()
+    val getAllLikedData = likedHistoryItemRepository.getAllData()
+    //TODO does this work?!
+    //TODO use indexnummer etc to track which item disliked -> remove from likedHistory List etc
+    LazyColumn(userScrollEnabled = true,
+        contentPadding = PaddingValues(all = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        itemsIndexed(items = getAllLikedData,
+            key = { index, likedHistoryItem -> likedHistoryItem.name }) {
+                index, likedHistoryItem ->
+                Log.d("likedHistory", index.toString())
+                LazyLikedHistory(likedHistoryItem = likedHistoryItem)
+        }
+    }
+}
+
 
 @Composable
 fun MainProfileScreen(navController: NavController){

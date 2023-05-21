@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -22,25 +21,25 @@ import com.example.barcodebites.ui.theme.backWhite
 
 
 
-class HistoryItem(val name: String){}
+class LikedHistoryItem(val name: String){}
 
-class HistoryItemRepository{
-    fun getAllData(): List<HistoryItem>{
+class LikedHistoryItemRepository{
+    fun getAllData(): List<LikedHistoryItem>{
         return listOf(
-            HistoryItem("Huhn"),
-            HistoryItem("Brot"),
-            HistoryItem("Beispiel"),
-            HistoryItem("Nudeln"),
-            HistoryItem("Suppe"),
-            HistoryItem("Banane"),
-            HistoryItem("Apfel"),
-            HistoryItem("Käse"),
-            HistoryItem("Salami"),
-            HistoryItem("Zwiebel"),
-            HistoryItem("Mandel"),
-            HistoryItem("Kirsche"),
-            HistoryItem("Melone"),
-            HistoryItem("Muelsi"),
+            LikedHistoryItem("Huhn"),
+            LikedHistoryItem("Brot"),
+            LikedHistoryItem("Beispiel"),
+            LikedHistoryItem("Nudeln"),
+            LikedHistoryItem("Suppe"),
+            LikedHistoryItem("Banane"),
+            LikedHistoryItem("Apfel"),
+            LikedHistoryItem("Käse"),
+            LikedHistoryItem("Salami"),
+            LikedHistoryItem("Zwiebel"),
+            LikedHistoryItem("Mandel"),
+            LikedHistoryItem("Kirsche"),
+            LikedHistoryItem("Melone"),
+            LikedHistoryItem("Muelsi"),
         )
     }
 }
@@ -49,7 +48,7 @@ class HistoryItemRepository{
 
 @Composable
 //TODO logik list zu füllen mit eigentlichen daten
-fun LazyHistory(historyItem: HistoryItem){
+fun LazyLikedHistory(likedHistoryItem: LikedHistoryItem){
     Row(horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.height(70.dp)){
         Box(modifier = Modifier
@@ -58,11 +57,11 @@ fun LazyHistory(historyItem: HistoryItem){
             .background(color = backBlack)){
             Text(text = "Bild", color = backWhite)
         }
-        Text(text = "${historyItem.name}")
-        Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "notliked",
+        Text(text = "${likedHistoryItem.name}")
+        Icon(imageVector = Icons.Default.Favorite, contentDescription = "liked",
             modifier = Modifier.clickable {
-                /*TODO logik: anderes Icon(gefülltes herz) + bei weiterem cklicken zurück
-                + logik, dass die reihe (plus infos ) in likedHistory auftaucht
+                /*TODO logik: bei clicken zurück zu unliked und aus liked liste raus
+               
                  */
             })
     }

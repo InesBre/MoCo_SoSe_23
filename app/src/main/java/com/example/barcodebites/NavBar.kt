@@ -72,7 +72,8 @@ fun RowScope.AddItem(
     NavigationBarItem(
         selected = currentDestination?.hierarchy?.any{
             it.route == screen.route } == true,
-        onClick = { navController.navigate(screen.route) },
+        onClick = { navController.navigate(screen.route) { popUpTo(screen.route){inclusive = true}} },
+        //TODO popUpTo nachträglich eingefügt -> prüfen ob klappt
         label = { Text(text = screen.title) },
         icon = { Icon(imageVector = screen.icon, contentDescription = "NavigationIcon")},
         alwaysShowLabel = false,
