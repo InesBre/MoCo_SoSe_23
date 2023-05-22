@@ -1,4 +1,4 @@
-package com.example.barcodebites
+package com.example.barcodemvvm
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -13,7 +13,7 @@ fun NavBarNav(navController: NavHostController){
     NavHost(navController = navController, startDestination = NavBarItem.Home.route){
         composable(NavBarItem.Home.route){
             //tatsächliche definierte screens
-           HomeScreen(navController = rememberNavController())
+            HomeScreen(navController = rememberNavController())
         }
         composable(NavBarItem.History.route){
             MainHistoryScreen(navController = rememberNavController())
@@ -33,19 +33,15 @@ fun AppNav(navController: NavHostController) {
         // define all possible destinations
         //more possible screens to create?!
         composable(Screen.StartScreen.route) { StartScreen(navController = navController) }
-        composable(Screen.RegisterScreen.route) { RegisterScreen(navController = navController) }
+        composable(Screen.RegisterScreen.route) { RegisterScreen(navController = rememberNavController()) }
 
-        composable(Screen.HomeScreen.route) { HomeScreen(navController = navController) }
-        composable(Screen.PostScanScreen.route) { RegisterScreen(navController = navController) }
+        composable(Screen.HomeScreen.route) { HomeScreen(navController = rememberNavController()) }
+        composable(Screen.PostScanScreen.route) { RegisterScreen(navController = rememberNavController()) }
 
-        composable(Screen.MainHistoryScreen.route) { MainHistoryScreen(navController = navController) }
-        composable(Screen.LikeHistoryScreen.route) { LikeHistoryScreen(navController = navController) }
+        composable(Screen.MainHistoryScreen.route) { MainHistoryScreen(navController = rememberNavController()) }
+        composable(Screen.LikeHistoryScreen.route) { LikeHistoryScreen(navController = rememberNavController()) }
 
         composable(Screen.MainProfileScreen.route) { MainProfileScreen(navController = navController)}
         composable(Screen.BearbeitenProfileScreen.route) { BearbeitenProfileScreen(navController = navController) }
     }
 }
-
-
-
-

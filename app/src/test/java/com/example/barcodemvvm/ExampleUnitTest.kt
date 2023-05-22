@@ -1,4 +1,4 @@
-package com.example.barcodebites
+package com.example.barcodemvvm
 
 import org.junit.Test
 

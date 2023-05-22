@@ -1,26 +1,19 @@
-package com.example.barcodebites
+package com.example.barcodemvvm
 
-import android.util.Log
+import androidx.compose.foundation.background
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,12 +26,19 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.barcodebites.ui.theme.backBlack
-import com.example.barcodebites.ui.theme.backWhite
-import com.example.barcodebites.ui.theme.mainPurple
+import com.example.barcodemvvm.ui.theme.backBlack
+import com.example.barcodemvvm.ui.theme.backWhite
+import com.example.barcodemvvm.ui.theme.mainPurple
+import kotlinx.coroutines.launch
+
+
 
 
 //Screens als Objecte einfügen, siehe auch github
@@ -76,12 +76,12 @@ fun Bars(){
         topBar = { TopBar() },
         bottomBar ={ NavBar(navController = navController) },
 
-    ) {
+        ) {
         Box(modifier = Modifier
             .fillMaxSize()
             .padding(it))
         { NavBarNav(navController = navController)
-                        AppNav(navController = navController) //TODO prüfen ob so klappt
+            AppNav(navController = navController) //TODO prüfen ob so klappt
         }
 
     }
@@ -91,7 +91,6 @@ fun Bars(){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-//evtl titel von aktueller seite oä immer anzeigen
 fun TopBar() {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = mainPurple),
@@ -101,7 +100,8 @@ fun TopBar() {
 
 
 //wiederholende Elemente oä
-
+@Composable
+fun HistoryItem(){}
 
 //TODO potentielle noch andere finden
 
@@ -119,7 +119,7 @@ fun StartScreen(navController: NavController){
                 .background(color = backBlack)
                 .height(50.dp)
                 .width(500.dp),
-                )
+            )
             { Text(text = "Logo", color = backWhite) }
             Text("Barcode - Bites")
             OutlinedTextField(value = "", onValueChange = {}, label = { Text(text = "Name")})
@@ -141,6 +141,8 @@ fun StartScreen(navController: NavController){
         }
     }
 }
+
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -196,75 +198,26 @@ fun PostScanScreen(navController: NavController){
 fun MainHistoryScreen(navController: NavController){
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
-        //TODO logik, dass alle gescannten sachen hier auftauchen mit info etc
-        /*Box(
+        Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) { Text(text = "MainHistory")
             //einträge mit lazy column
-         }*/
-        //Column titel?, nav to liked!
-        //lazycolumn scrollable filled with historyitem s
-        Column(modifier = Modifier.height(60.dp),
-            horizontalAlignment = Alignment.End){
-            Text(text = "Liked Items")
-            Icon(imageVector = Icons.Default.ArrowForward,
-                contentDescription = "toLikedItems",
-                modifier = Modifier.clickable { navController.navigate(Screen.LikeHistoryScreen.route) })
-        }
-        val historyItemRepository = HistoryItemRepository()
-        val getAllData = historyItemRepository.getAllData()
-        //TODO does this work?!
-        //TODO use indexnummer etc to track which item liked -> add to likedHistory List etc
-        LazyColumn(userScrollEnabled = true,
-            contentPadding = PaddingValues(all = 10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            itemsIndexed(items = getAllData,
-                key = { index, historyItem -> historyItem.name }) { index, historyItem ->
-                Log.d("mainHistory", index.toString())
-                LazyHistory(historyItem = historyItem)
-            }
         }
     }
 }
 
 @Composable
-fun LikeHistoryScreen(navController: NavController) {//scollabale
-    Column(
-        modifier = Modifier.height(60.dp),
-        horizontalAlignment = Alignment.Start
-    ) {
-        Icon(imageVector = Icons.Default.ArrowBack,
-            contentDescription = "toHistoryItems",
-            modifier = Modifier.clickable { navController.navigate(Screen.MainHistoryScreen.route)
-                                            {popUpTo(Screen.MainHistoryScreen.route){inclusive = true}}})
-        Text(text = "back")
-    }
-    val likedHistoryItemRepository = LikedHistoryItemRepository()
-    val getAllLikedData = likedHistoryItemRepository.getAllData()
-    //TODO does this work?!
-    //TODO use indexnummer etc to track which item disliked -> remove from likedHistory List etc
-    LazyColumn(userScrollEnabled = true,
-        contentPadding = PaddingValues(all = 10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        itemsIndexed(items = getAllLikedData,
-            key = { index, likedHistoryItem -> likedHistoryItem.name }) {
-                index, likedHistoryItem ->
-                Log.d("likedHistory", index.toString())
-                LazyLikedHistory(likedHistoryItem = likedHistoryItem)
-        }
-    }
-}
-
+fun LikeHistoryScreen(navController: NavController){}//scollabale
 
 @Composable
 fun MainProfileScreen(navController: NavController){
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text="MainProfile",
             modifier = Modifier.clickable {
-            navController.navigate(
-                route = Screen.BearbeitenProfileScreen.route) }
-    )}
+                navController.navigate(
+                    route = Screen.BearbeitenProfileScreen.route) }
+        )}
 }
 
 //popBackStack() fun zum zurück gehen evtl
@@ -286,12 +239,8 @@ fun BearbeitenProfileScreen(navController: NavController){
     }}
 }
 
-
-/*
 @Preview
 @Composable
 fun StartScreenPreview(){
     fun StartScreen(navController: NavController){}
 }
-*/
-

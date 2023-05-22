@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">BarcodeBites</string>
+    <string name="app_name">BarcodeMVVM</string>
+    <string name="title_activity_nav_bar">NavBar</string>
+    <string name="title_activity_scanner">Scanner</string>
+    <string name="title_activity_routes">Routes</string>
+    <string name="title_activity_run_scanner">RunScanner</string>
+    <string name="title_activity_screens">Screens</string>
 </resources>

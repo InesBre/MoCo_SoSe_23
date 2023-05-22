@@ -1,4 +1,4 @@
-package com.example.barcodebites
+package com.example.barcodemvvm
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.barcodebites.ui.theme.mainPurple
+import com.example.barcodemvvm.ui.theme.mainPurple
 
 
 sealed class NavBarItem(
@@ -53,12 +53,12 @@ fun NavBar(navController: NavController){
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    
+
     BottomAppBar(containerColor = mainPurple) {
         screens.forEach(){screen ->
             AddItem(screen = screen,
-                    currentDestination = currentDestination,
-                    navController = navController)
+                currentDestination = currentDestination,
+                navController = navController)
         }
     }
 }
@@ -72,11 +72,10 @@ fun RowScope.AddItem(
     NavigationBarItem(
         selected = currentDestination?.hierarchy?.any{
             it.route == screen.route } == true,
-        onClick = { navController.navigate(screen.route) { popUpTo(screen.route){inclusive = true}} },
-        //TODO popUpTo nachträglich eingefügt -> prüfen ob klappt
+        onClick = { navController.navigate(screen.route) },
         label = { Text(text = screen.title) },
         icon = { Icon(imageVector = screen.icon, contentDescription = "NavigationIcon")},
         alwaysShowLabel = false,
-        )
+    )
 
 }
