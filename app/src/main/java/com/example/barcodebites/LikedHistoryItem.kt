@@ -61,7 +61,7 @@ fun LazyLikedHistory(likedHistoryItem: LikedHistoryItem){
         Icon(imageVector = Icons.Default.Favorite, contentDescription = "liked",
             modifier = Modifier.clickable {
                 /*TODO logik: bei clicken zurück zu unliked und aus liked liste raus
-               
+
                  */
             })
     }

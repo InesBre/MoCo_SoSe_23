@@ -49,16 +49,20 @@ fun NavBar(navController: NavController){
     val screens = listOf(
         NavBarItem.Profile,
         NavBarItem.Home,
-        NavBarItem.History
+        NavBarItem.History,
+        //Screen.LikedHistoryScreen -> screens Typ = NavBarItem, wenn any dann fehler
+    ///TODO workaround suchen -> navigationen verbinden
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    
+    val navBarDestination = screens.any {it.route == currentDestination?.route}
+    if (navBarDestination){
     BottomAppBar(containerColor = mainPurple) {
         screens.forEach(){screen ->
             AddItem(screen = screen,
                     currentDestination = currentDestination,
                     navController = navController)
+            }
         }
     }
 }
@@ -72,7 +76,7 @@ fun RowScope.AddItem(
     NavigationBarItem(
         selected = currentDestination?.hierarchy?.any{
             it.route == screen.route } == true,
-        onClick = { navController.navigate(screen.route) { popUpTo(screen.route){inclusive = true}} },
+        onClick = { navController.navigate(screen.route)/* { popUpTo(screen.route){inclusive = true}} */},
         //TODO popUpTo nachträglich eingefügt -> prüfen ob klappt
         label = { Text(text = screen.title) },
         icon = { Icon(imageVector = screen.icon, contentDescription = "NavigationIcon")},

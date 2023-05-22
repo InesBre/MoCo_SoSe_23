@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.barcodebites.Graphs.RootNavGraph
 import com.example.barcodebites.ui.theme.BarcodeBitesTheme
 
 //import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -16,19 +17,21 @@ import com.example.barcodebites.ui.theme.BarcodeBitesTheme
 class MainActivity : ComponentActivity() {
 
     //für navigation versuch
-    lateinit var navController: NavHostController
+    //lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BarcodeBitesTheme {
-                StartScreen(navController = rememberNavController())
-                //StartScreen()
+                //StartScreen(navController = rememberNavController())
+                //HomeScreen(navController = rememberNavController()) //-> works, but is without NavBar etc
                 //Bars()
-
                 //für navigation versuch
                 /*navController = rememberNavController()
                 AppNav(navController = navController)*/
+
+                //für nested nav versuch
+                RootNavGraph(navController = rememberNavController())
             }
         }
     }
