@@ -1,4 +1,6 @@
 package com.example.barcodebites.feature_Authentication.presentation
 
-class LoginState {
-}
+data class LoginState (
+    val EMPTY: Boolean = true,
+    val IS_BUSY: Boolean = false
+)

@@ -1,8 +1,9 @@
 package com.example.barcodebites.feature_Authentication.domain.repository
 
 import com.example.barcodebites.core.data.entities.User
+import com.example.barcodebites.feature_Authentication.data.AuthenticationDao
 
-interface LoginRepository {
-    suspend fun addUser(user: User)
-    suspend fun getPW(email: String): String
+interface AuthenticationRepository : AuthenticationDao {
+    override suspend fun addUser(user: User)
+    override suspend fun getPW(email: String): String
 }

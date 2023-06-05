@@ -1,4 +1,6 @@
 package com.example.barcodebites.core
 
-class CoreDao {
-}
+import androidx.room.Dao
+
+@Dao
+interface CoreDao {}

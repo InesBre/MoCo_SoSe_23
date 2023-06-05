@@ -1,9 +1,6 @@
 package com.example.barcodebites.ui.theme
 
-
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -13,7 +10,7 @@ private val DarkColorScheme = darkColorScheme(
     primary = mainPurple,
     secondary = PurpleGrey80,
     tertiary = Pink80,
-    background = backWhite
+    background = backBlack
 
     /* Other default colors to override
         background = Color(0xFFFFFBFE),
@@ -46,7 +43,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun BarcodeBitesTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = true,
     content: @Composable () -> Unit) {
     val color = if (darkTheme) DarkColorScheme
     else LightColorScheme
