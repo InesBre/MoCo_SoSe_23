@@ -1,21 +1,22 @@
 package com.example.barcodebites.feature_Scan.data
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Upsert
+import androidx.room.Update
 import com.example.barcodebites.core.data.entities.Product
 
 @Dao
 interface ScanDao {
     @Query("SELECT * FROM Product WHERE productId = :productId")
-    suspend fun getAll(productId: Int): List<Product>
+    suspend fun getProductById(productId: Int): Product?
 
-    @Upsert
-    suspend fun upsertProduct(product: Product)
+    @Query("SELECT * FROM Product WHERE productName = :productName")
+    suspend fun getProductByName(productName: String): Product?
 
-    @Delete
-    suspend fun deleteProduct(product: Product)
+    @Insert
+    suspend fun insertProduct(product: Product)
+
+    @Update
+    suspend fun updateProduct(product: Product)
 }

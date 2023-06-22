@@ -1,18 +1,21 @@
-package com.example.barcodebites.core.presentation.util
+package com.example.barcodebites.core.presentation
 
 import android.content.Context
-import com.example.barcodebites.feature_Authentication.presentation.LoginScreen
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.barcodebites.core.AuthenticationViewModelFactory
-import com.example.barcodebites.core.CoreDao
-import com.example.barcodebites.core.ScanViewModelFactory
-import com.example.barcodebites.core.presentation.Screen
-import com.example.barcodebites.feature_Authentication.data.AuthenticationDao
-import com.example.barcodebites.feature_Authentication.data.AuthenticationRepositoryImplementation
+import com.example.barcodebites.core.inheriting.ViewModelFactory
+import com.example.barcodebites.feature_Authentication.presentation.AuthenticationViewModel
+import com.example.barcodebites.feature_Authentication.presentation.LoginScreen
+import com.example.barcodebites.feature_History.data.HistoryRepositoryImplementation
+import com.example.barcodebites.feature_History.presentation.HistoryScreen
+import com.example.barcodebites.feature_Profile.data.ProfileRepositoryImplementation
+import com.example.barcodebites.feature_Profile.presentation.ProfileScreen
 import com.example.barcodebites.feature_Scan.data.ScanRepositoryImplementation
 import com.example.barcodebites.feature_Scan.presentation.ScanScreen
 
@@ -21,58 +24,34 @@ import com.example.barcodebites.feature_Scan.presentation.ScanScreen
         + "?noteId={noteId}&noteColor={noteColor}
          */
 @Composable
-fun NavAppHost(navController: NavHostController, context: Context){
+fun NavAppHost(navController: NavController, context: Context, viewModel: AuthenticationViewModel, paddingValues: PaddingValues, startDest: String){
 
-    NavHost(navController = rememberNavController(), startDestination = Screen.LoginScreen.route){
+    NavHost(navController = navController as NavHostController, startDestination = startDest, Modifier.padding(paddingValues)){
 
         composable(Screen.LoginScreen.route){
             LoginScreen(
                 navController = navController,
-                factory = AuthenticationViewModelFactory(AuthenticationRepositoryImplementation(context),navController)
+                viewModel = viewModel
             )
         }
 
         composable(Screen.ScanScreen.route){
             ScanScreen(
                 navController = navController,
-                factory = ScanViewModelFactory(ScanRepositoryImplementation(context))
+                factory = ViewModelFactory(ScanRepositoryImplementation(context))
             )
         }
 
-        /*composable(Screen.MainHistoryScreen.route){
-            MainHistoryScreen (
-                navController = rememberNavController(),
-                onToLikedClick = {navController.navigate(Screen.LikedHistoryScreen.route)},
-                //TODO onScanClicked implementieren, expliziete Seite für ScanInfos etc
+        composable(Screen.HistoryScreen.route){
+            HistoryScreen(
+                factory = ViewModelFactory(HistoryRepositoryImplementation(context))
             )
         }
 
-        composable(Screen.LikedHistoryScreen.route){
-            LikedHistoryScreen(
-                        onBackClick = {navController.navigate(Screen.MainHistoryScreen.route)},
-                //TODO onScanClicked...
-                )
-        }
-
-        composable(Screen.HomeScreen.route){
-            HomeScreen (
-                onPostScanClick = {navController.navigate(Screen.PostScanScreen.route)},
-                //TODO eigentlcih bei Scan automatisch!!!
+        composable(Screen.ProfileScreen.route){
+            ProfileScreen(
+                factory = ViewModelFactory(ProfileRepositoryImplementation(context))
             )
         }
-
-        composable(Screen.PostScanScreen.route){
-            PostScanScreen (
-                onBackClick = {navController.navigate(Screen.HomeScreen.route)},
-                //TODO weitere?
-                    )
-        }
-
-        composable(Screen.MainProfileScreen.route){
-            MainProfileScreen (
-                onProfilBearbeitenClick = {navController.navigate(Screen.BearbeitenProfileScreen.route)},
-            //TODO weitere?
-                )
-        }*/
     }
 }
