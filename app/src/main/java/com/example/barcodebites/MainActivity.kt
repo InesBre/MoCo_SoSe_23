@@ -1,40 +1,46 @@
 package com.example.barcodebites
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.barcodebites.ui.theme.BarcodeBitesTheme
-
-//import com.google.mlkit.vision.barcode.BarcodeScanner
-
-//TODO Kamera permission richtig
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.barcodebites.ui.theme.BarcodebitesTheme
 
 class MainActivity : ComponentActivity() {
-
-    //für navigation versuch
-    lateinit var navController: NavHostController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BarcodeBitesTheme {
-                StartScreen(navController = rememberNavController())
-                //StartScreen()
-                //Bars()
-
-                //für navigation versuch
-                /*navController = rememberNavController()
-                AppNav(navController = navController)*/
+            BarcodebitesTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Greeting("Android")
+                }
             }
         }
     }
 }
 
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
+        modifier = modifier
+    )
+}
 
-
-
-
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    BarcodebitesTheme {
+        Greeting("Android")
+    }
+}

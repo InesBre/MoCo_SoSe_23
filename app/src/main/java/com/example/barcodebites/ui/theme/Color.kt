@@ -12,9 +12,10 @@ val Pink40 = Color(0xFF7D5260)
 
 
 
-val backWhite = Color(0xFFFFFFF)
+val backWhite = Color(0xFFFFFFFF)
 val backBlack = Color(0xFF333333)
 val mainPurple = Color(0xFF6650a4)
+val purple = Color(0xFFad95f0)
 /*val background = Color(0xFFFFFBFE),
 val surface = Color(0xFFFFFBFE),
 val onPrimary = Color.White,
