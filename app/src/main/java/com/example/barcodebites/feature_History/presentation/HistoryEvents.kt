@@ -12,6 +12,11 @@ sealed class HistoryEvents {
     ): HistoryEvents()
 
     data class Remove(
-        val productId: Int
+        val productId: String
+    ): HistoryEvents()
+
+    data class Filter(
+        val filters: List<com.example.barcodebites.feature_History.presentation.Filter
+                >
     ): HistoryEvents()
 }

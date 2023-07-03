@@ -14,4 +14,8 @@ sealed class LoginEvents {
         val email: String,
         val password: String
     ): LoginEvents()
+
+    data class Reset(
+        val email: String,
+    ): LoginEvents()
 }
