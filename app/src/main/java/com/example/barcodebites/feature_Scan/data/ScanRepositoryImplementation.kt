@@ -3,20 +3,20 @@ package com.example.barcodebites.feature_Scan.data
 import android.content.Context
 import android.widget.Toast
 import com.android.volley.VolleyError
-import com.example.barcodebites.core.data.BaBiDb
 import com.example.barcodebites.core.data.entities.Product
 import com.example.barcodebites.core.inheriting.BaseRepositoryImplementation
 import com.example.barcodebites.feature_Scan.domain.http.Request
 import com.example.barcodebites.feature_Scan.domain.http.Response
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDateTime
 
 
-class ScanRepositoryImplementation(val context: Context) : ScanDao, BaseRepositoryImplementation(context) {
-    private val dao = BaBiDb.getDatabase(context).scanDao()
+class ScanRepositoryImplementation(val context: Context) : BaseRepositoryImplementation(context) {
     private val api = Request(context)
     private suspend fun <T> apiCall(apiRequest: suspend () -> T): Response<T> {
         return withContext(Dispatchers.IO) {
@@ -100,7 +100,7 @@ class ScanRepositoryImplementation(val context: Context) : ScanDao, BaseReposito
                     field to value
                 }.toMap()
                 return Product(
-                    productId = 0,
+                    code = code,
                     productName = name,
                     brand = prodMap.getOrDefault(fields[5],"") as String,
                     ingredients = ingredients.joinToString(",") { it.name!! },
@@ -109,8 +109,8 @@ class ScanRepositoryImplementation(val context: Context) : ScanDao, BaseReposito
                     allergens = prodMap.getOrDefault(fields[6],"") as String,
                     complete = prodMap.getOrDefault(fields[7],false) as Boolean,
                     score = prodMap.getOrDefault(fields[8],"") as String,
-                    userEmail = getUser()!!,
-                    lastScanned = LocalDateTime.now().toString()
+                    lastScanned = LocalDateTime.now().toString(),
+                    userEmail = getUser()!!
                 )
             }
         }
@@ -130,22 +130,6 @@ class ScanRepositoryImplementation(val context: Context) : ScanDao, BaseReposito
             list.add(input.getString(i))
         }
         return list
-    }
-
-    override suspend fun getProductById(productId: Int): Product? {
-        return dao.getProductById(productId)
-    }
-
-    override suspend fun getProductByName(productName: String): Product? {
-        return dao.getProductByName(productName)
-    }
-
-    override suspend fun insertProduct(product: Product) {
-        dao.insertProduct(product)
-    }
-
-    override suspend fun updateProduct(product: Product) {
-        dao.updateProduct(product)
     }
 
     fun getFields(): List<String> {

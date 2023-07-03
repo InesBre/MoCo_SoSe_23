@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.barcodebites.R
+import com.example.barcodebites.core.data.entities.Product
 import com.example.barcodebites.core.inheriting.ViewModelFactory
 import com.example.barcodebites.core.presentation.NavAppHost
 import com.example.barcodebites.core.presentation.Screen
@@ -72,7 +73,9 @@ fun MainScreen(context: Context) {
 }
 
 @Composable
-fun BottomBar(navController: NavHostController, currentDest:NavDestination?, onLogout: () -> Unit) {
+fun BottomBar(navController: NavHostController,
+              currentDest:NavDestination?,
+              onLogout: () -> Unit) {
     val screens = listOf(
         NavBarScreen.Scan,
         NavBarScreen.History,
@@ -103,6 +106,7 @@ fun RowScope.AddItem(
         icon = { Icon(screen.icon, "${screen.title} Icon") },
         selected = currentDest?.hierarchy?.any { it.route == screen.route } == true,
         alwaysShowLabel = false,
+        enabled = true,
         onClick = {
             if (screen.route == NavBarScreen.Logout.route) {
                 onLogout()

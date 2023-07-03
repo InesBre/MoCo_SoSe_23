@@ -1,4 +1,3 @@
-
 package com.example.barcodebites.core.inheriting
 
 import android.content.Context
@@ -6,11 +5,23 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.example.barcodebites.core.data.entities.Preference
 import com.example.barcodebites.core.data.entities.Product
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
+import java.lang.AssertionError
 
 abstract class BaseRepositoryImplementation(context: Context) {
+    val db = Firebase.firestore
+    val auth = Firebase.auth
+    val PRODUCTS_COLLECTION = "products"
+    val PREFERENCES_COLLECTION = "preferences"
+
+    private val key = "loggedIn"
     private val prefs: SharedPreferences = context.getSharedPreferences("com.example.barcodeBites",
         Context.MODE_PRIVATE)
-    private val key = "loggedIn"
 
     val preferencesList: Map<String,Triple<String,String?,(product: Product) -> Boolean>> = mapOf(
         "isVegan" to Triple("Vegane Ernährung",null) {
@@ -27,24 +38,38 @@ abstract class BaseRepositoryImplementation(context: Context) {
         }
     )
 
-    fun filterProducts(pref: Preference,product: Product){
-        val str = "${pref.preferenceName}: ${product.productName}"
-        Log.d("FILTER",str)
+    suspend fun checkNonEdibility(product: Product): Boolean {
+        return getUserPreferences(getUser()!!).any{
+            val preference = preferencesList[it.preferenceName]
+            preference!!.third.invoke(product)
+        }
     }
 
-    fun setUser(email: String){
-        prefs.edit().putString(key,email).apply()
+    suspend fun getUserPreferences(email: String): List<Preference> {
+        return db.collection(PREFERENCES_COLLECTION).whereEqualTo("userEmail",email).get().await().toObjects()
     }
 
     fun checkUser(): Boolean {
-        return prefs.getString(key,null) != null
+        return auth.currentUser !== null
+    }
+
+    fun getId(data: Any): String {
+        return when(data){
+            is Product -> "${data.code}:${data.userEmail}"
+            is Preference -> "${data.preferenceName}:${data.userEmail}"
+            else -> throw AssertionError("Expected either Product or Preference Datatype, Received: ${data.javaClass.kotlin}")
+        }
+    }
+
+    suspend fun upsertProduct(product: Product) {
+        db.collection(PRODUCTS_COLLECTION).document(getId(product)).set(product, SetOptions.merge()).await()
     }
 
     fun getUser(): String? {
-        return prefs.getString(key,null)
+        return auth.currentUser?.email
     }
 
     fun removeUser(){
-        prefs.edit().remove(key).apply()
+        auth.signOut()
     }
 }

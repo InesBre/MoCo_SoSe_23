@@ -28,9 +28,7 @@ class ScanViewModel(private val repository: ScanRepositoryImplementation) :
                 viewModelScope.launch {
                     if(event.save){
                         val product = state.value.DIALOG_PRODUCT!!
-                        val found = repository.getProductByName(product.productName)
-                        if(found == null) repository.insertProduct(product)
-                        else repository.updateProduct(product)
+                        repository.upsertProduct(product)
                     }
                     _state.value = state.value.copy(DIALOG_PRODUCT = null)
                 }
@@ -47,7 +45,6 @@ class ScanViewModel(private val repository: ScanRepositoryImplementation) :
                 val product = repository.parseProduct(req.value)
                 if(product === null) _state.value = state.value.copy(IS_BUSY = false)
                 else _state.value = state.value.copy(DIALOG_PRODUCT = product)
-
             }
             is Response.Error -> Log.e("Network Error","${req.code}: ${req.message}")
             else -> Unit

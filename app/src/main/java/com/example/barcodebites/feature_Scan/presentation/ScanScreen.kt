@@ -39,7 +39,7 @@ fun ScanScreen(
                     Text(text = "Speicherbestätigung")
                 },
                 text = {
-                    val edible = when (product.isEdible) {
+                    val edible = when (true) {
                         true -> "Ok"
                         else -> "Meh"
                     }

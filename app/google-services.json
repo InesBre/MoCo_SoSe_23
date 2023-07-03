@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "871536574232",
+    "project_id": "barcode-bites",
+    "storage_bucket": "barcode-bites.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871536574232:android:15c322274fb5239860286d",
+        "android_client_info": {
+          "package_name": "com.example.barcodebites"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871536574232-2p7mt19eb9aqnt8otegnt9ppas4rkpr3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0WcRiA6uAFpPjWbE0bJ84Pz1u0kVMHfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871536574232-2p7mt19eb9aqnt8otegnt9ppas4rkpr3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
