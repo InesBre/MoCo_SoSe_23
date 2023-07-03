@@ -1,23 +1,21 @@
 package com.example.barcodebites.feature_Profile.data
 
 
+
 import android.content.Context
-import com.example.barcodebites.core.data.BaBiDb
 import com.example.barcodebites.core.data.entities.Preference
 import com.example.barcodebites.core.inheriting.BaseRepositoryImplementation
+import com.google.firebase.firestore.ktx.toObjects
+import kotlinx.coroutines.tasks.await
 
 
-class ProfileRepositoryImplementation(context: Context) : ProfileDao, BaseRepositoryImplementation(context) {
-    private val dao = BaBiDb.getDatabase(context).profileDao()
-    override suspend fun getPreferences(email: String): List<Preference> {
-        return dao.getPreferences(email)
+class ProfileRepositoryImplementation(context: Context) : BaseRepositoryImplementation(context) {
+    suspend fun insertPreference(preference: Preference) {
+        db.collection(PREFERENCES_COLLECTION).document(getId(preference)).set(preference).await()
     }
 
-    override suspend fun insertPreference(preference: Preference) {
-        dao.insertPreference(preference)
-    }
-
-    override suspend fun deletePreference(email: String, prefName: String) {
-        dao.deletePreference(email, prefName)
+    suspend fun deletePreference(email: String, prefName: String) {
+        val preference = Preference(preferenceName = prefName, userEmail = email)
+        db.collection(PREFERENCES_COLLECTION).document(getId(preference)).delete().await()
     }
 }
