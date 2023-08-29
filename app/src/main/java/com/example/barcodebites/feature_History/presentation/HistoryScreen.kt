@@ -73,8 +73,8 @@ fun HistoryScreen(
     viewModel.onEvent(HistoryEvents.Init())
     val filter = listOf(
         Filter("search", "Suche Name / Firma", remember { mutableStateOf("") }),
-        Filter("isLiked", "Nur beliebte Gerichte", remember { mutableStateOf(false) }),
-        Filter("isEdible", "Nur Essbares", remember { mutableStateOf(false) })
+        Filter("isLiked", "Nur gelikete Gerichte", remember { mutableStateOf(false) }),
+        Filter("isEdible", "Nur den Präferenzen entsprechende Gerichte", remember { mutableStateOf(false) })
     )
     val expanded = remember { mutableStateOf(false) }
     Column {
@@ -284,11 +284,11 @@ fun FormatDetails(pair: Pair<Product, Boolean>) {
             Text(text = product.brand, modifier = Modifier.weight(.5f))
         }
         Row {
-            Text(text = "Kannste Essen", modifier = Modifier.weight(.5f))
+            Text(text = "Den Präferenzen entsprechend", modifier = Modifier.weight(.5f))
             Text(
                 text = when (isNotEdible) {
-                    true -> "FINGER WEG!"
-                    else -> "ISS JUNG!"
+                    true -> "Nein"
+                    else -> "Ja"
                 }, modifier = Modifier.weight(.5f)
             )
         }
