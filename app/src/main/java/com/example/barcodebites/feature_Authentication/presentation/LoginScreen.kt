@@ -156,11 +156,11 @@ fun Form(
         val isPwValid = viewModel.validateFields("password", password.value.text)
         var text = ""
         if (!isPwValid && !isEmailValid)
-            text = "Email und Passwort nicht valide. Bitte überprüfen SIE Ihre Eingaben."
+            text = "Email und Passwort nicht valide. Bitte überprüfen Sie Ihre Eingaben."
         if (!isEmailValid)
-            text = "Email nicht valide. Bitte überprüfen SIE Ihre Eingaben"
+            text = "Email nicht valide. Bitte überprüfen Sie Ihre Eingaben"
         if (!isPwValid)
-            text = "Passwort nicht valide. Bitte überprüfen SIE Ihre Eingaben. Das Passwort muss mindestens 6 Zeichen enthalten"
+            text = "Passwort nicht valide. Bitte überprüfen Sie Ihre Eingaben. Das Passwort muss mindestens 6 Zeichen enthalten"
         if(text.isNotEmpty()) {
             val title = if(onLogin === null) "Fehler bei der Registrierung" else "Fehler beim Login"
             dialogTitle.value = title

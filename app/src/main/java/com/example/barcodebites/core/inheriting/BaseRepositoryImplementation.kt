@@ -33,8 +33,44 @@ abstract class BaseRepositoryImplementation(context: Context) {
         "isNuts" to Triple("Nussfreie Ernährung",null) {
             return@Triple it.allergens.contains("nut")
         },
-        "isSoy" to Triple("Sojafreie Ernährung","Alles was Soja enthält ist raus") {
+        "isSoy" to Triple("Sojafreie Ernährung",null) {
             return@Triple it.allergens.contains("soy")
+        },
+        "isFish" to Triple("Fischfreie Ernährung",null) {
+            return@Triple it.allergens.contains("fish")
+        },
+        "isCrustaceans" to Triple("Krebstierfreie Ernährung",null) {
+            return@Triple it.allergens.contains("crustaceans")
+        },
+        "isSellerie" to Triple("Selleriefreie Ernährung",null) {
+            return@Triple it.allergens.contains("sellerie")
+        },
+        "isMilk" to Triple("Milchfreie Ernährung",null) {
+            return@Triple it.allergens.contains("milk")
+        },
+        "isGluten" to Triple("Glutenfreie Ernährung",null) {
+            return@Triple it.allergens.contains("gluten")
+        },
+        "isEggs" to Triple("Eifreie Ernährung",null) {
+            return@Triple it.allergens.contains("eggs")
+        },
+        "isPeanuts" to Triple("Erdnussfreie Ernährung",null) {
+            return@Triple it.allergens.contains("peanuts")
+        },
+        "isLupin" to Triple("Lupinfreie Ernährung",null) {
+            return@Triple it.allergens.contains("lupin")
+        },
+        "isMustard" to Triple("Senffreie Ernährung",null) {
+            return@Triple it.allergens.contains("mustard")
+        },
+        "isSesamSeeds" to Triple("Fischfreie Ernährung",null) {
+            return@Triple it.allergens.contains("fish")
+        },
+        "isSulfur" to Triple("Schwefeldioxidfreie Ernährung",null) {
+            return@Triple it.allergens.contains("sulfur-dioxide")
+        },
+        "isSulfid" to Triple("Sulfidfreie Ernährung",null) {
+            return@Triple it.allergens.contains("sulfiting-agents")
         }
     )
 

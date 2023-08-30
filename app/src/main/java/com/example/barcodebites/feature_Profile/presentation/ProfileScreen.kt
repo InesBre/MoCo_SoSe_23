@@ -2,6 +2,7 @@ package com.example.barcodebites.feature_Profile.presentation
 
 
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,7 +39,7 @@ fun ProfileScreen(
             ) {
                 val name = it.first
                 val triple = it.second
-                Row {
+                Row (horizontalArrangement = Arrangement.SpaceBetween){
                     Column {
                         Text(text = triple.first)
                         triple.second?.let { desc -> Text(text = desc) }

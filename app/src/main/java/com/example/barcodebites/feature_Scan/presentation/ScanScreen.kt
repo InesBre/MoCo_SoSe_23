@@ -40,12 +40,12 @@ fun ScanScreen(
                 },
                 text = {
                     val edible = when (true) {
-                        true -> "Ok"
-                        else -> "Meh"
+                        true -> "den Präferenzen entsprechend"
+                        else -> "nicht den Präferenzen entsprechend"
                     }
                     Column {
                         Text(text = "Produkt ${product.productName} ist $edible")
-                        Text(text = "Wollen SIE es speichern?")
+                        Text(text = "Wollen Sie es speichern?")
                     }
                 },
                 confirmButton = {
