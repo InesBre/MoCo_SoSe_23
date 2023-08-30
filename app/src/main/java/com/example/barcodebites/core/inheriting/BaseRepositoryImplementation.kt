@@ -63,8 +63,8 @@ abstract class BaseRepositoryImplementation(context: Context) {
         "isMustard" to Triple("Senffreie Ernährung",null) {
             return@Triple it.allergens.contains("mustard")
         },
-        "isSesamSeeds" to Triple("Fischfreie Ernährung",null) {
-            return@Triple it.allergens.contains("fish")
+        "isSesamSeeds" to Triple("Sesamfreie Ernährung",null) {
+            return@Triple it.allergens.contains("sesame-seeds")
         },
         "isSulfur" to Triple("Schwefeldioxidfreie Ernährung",null) {
             return@Triple it.allergens.contains("sulfur-dioxide")
